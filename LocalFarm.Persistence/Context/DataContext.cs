@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 namespace LocalFarm.Persistence.Context
 {
     public class DataContext:DbContext
-    {      
-    
+    {
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+        }
         public DbSet<Product> Products { get; set; }
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<DiscountType> DiscountsTypes { get; set; }
