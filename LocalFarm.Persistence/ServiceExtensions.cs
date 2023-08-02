@@ -16,6 +16,7 @@ namespace LocalFarm.Persistence
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IDiscountRepository, DiscountRepository>();
         }
     }
 }

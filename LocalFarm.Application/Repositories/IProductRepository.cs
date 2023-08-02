@@ -5,6 +5,6 @@ namespace LocalFarm.Application.Repositories
     public interface IProductRepository :IBaseRepository<Product>
     {
         Task<IList<Product>> GetAllProducts(CancellationToken cancellationToken);
-        Task<IList<DiscountDetail>> GetAllProductDiscounts(CancellationToken cancellationToken);
+        Task<Product> GetProductById(int id, CancellationToken cancellationToken);
     }
 }

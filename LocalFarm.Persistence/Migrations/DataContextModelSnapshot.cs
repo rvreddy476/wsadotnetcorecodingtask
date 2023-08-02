@@ -22,6 +22,37 @@ namespace LocalFarm.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("LocalFarm.Domain.Common.Discount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiscountCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiscountName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Discounts");
+                });
+
             modelBuilder.Entity("LocalFarm.Domain.Common.DiscountDetail", b =>
                 {
                     b.Property<int>("Id")
@@ -36,7 +67,7 @@ namespace LocalFarm.Persistence.Migrations
                     b.Property<int>("DiscountId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DiscountTypeId")
+                    b.Property<int?>("DiscountTypeId")
                         .HasColumnType("int");
 
                     b.Property<double>("DiscountValue")
@@ -44,6 +75,12 @@ namespace LocalFarm.Persistence.Migrations
 
                     b.Property<int>("DiscountedProductID")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsApplicableForEachProduct")
+                        .HasColumnType("bit");
 
                     b.Property<bool?>("IsUnLimited")
                         .HasColumnType("bit");
@@ -54,7 +91,7 @@ namespace LocalFarm.Persistence.Migrations
                     b.Property<int?>("Limit")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("QuantityThreshold")
@@ -92,37 +129,6 @@ namespace LocalFarm.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DiscountsTypes");
-                });
-
-            modelBuilder.Entity("LocalFarm.Domain.Common.DiscountTypeId", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DiscountCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DiscountName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Discounts");
                 });
 
             modelBuilder.Entity("LocalFarm.Domain.Common.Product", b =>
@@ -165,7 +171,7 @@ namespace LocalFarm.Persistence.Migrations
 
             modelBuilder.Entity("LocalFarm.Domain.Common.DiscountDetail", b =>
                 {
-                    b.HasOne("LocalFarm.Domain.Common.DiscountTypeId", "Discount")
+                    b.HasOne("LocalFarm.Domain.Common.Discount", "Discount")
                         .WithMany("DiscountDetails")
                         .HasForeignKey("DiscountId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -173,15 +179,11 @@ namespace LocalFarm.Persistence.Migrations
 
                     b.HasOne("LocalFarm.Domain.Common.DiscountType", "DiscountType")
                         .WithMany()
-                        .HasForeignKey("DiscountTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DiscountTypeId");
 
                     b.HasOne("LocalFarm.Domain.Common.Product", "Product")
                         .WithMany("DiscountDetails")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.Navigation("Discount");
 
@@ -190,7 +192,7 @@ namespace LocalFarm.Persistence.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("LocalFarm.Domain.Common.DiscountTypeId", b =>
+            modelBuilder.Entity("LocalFarm.Domain.Common.Discount", b =>
                 {
                     b.Navigation("DiscountDetails");
                 });

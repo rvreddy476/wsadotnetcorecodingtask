@@ -68,14 +68,16 @@ namespace LocalFarm.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: true),
                     DiscountId = table.Column<int>(type: "int", nullable: false),
                     DiscountedProductID = table.Column<int>(type: "int", nullable: false),
-                    DiscountTypeId = table.Column<int>(type: "int", nullable: false),
+                    DiscountTypeId = table.Column<int>(type: "int", nullable: true),
                     DiscountValue = table.Column<double>(type: "float", nullable: false),
                     QuantityThreshold = table.Column<int>(type: "int", nullable: false),
                     IsUnLimited = table.Column<bool>(type: "bit", nullable: true),
                     Limit = table.Column<int>(type: "int", nullable: true),
+                    IsApplicableForEachProduct = table.Column<bool>(type: "bit", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -86,8 +88,7 @@ namespace LocalFarm.Persistence.Migrations
                         name: "FK_DiscountDetails_DiscountsTypes_DiscountTypeId",
                         column: x => x.DiscountTypeId,
                         principalTable: "DiscountsTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_DiscountDetails_Discounts_DiscountId",
                         column: x => x.DiscountId,
@@ -98,8 +99,7 @@ namespace LocalFarm.Persistence.Migrations
                         name: "FK_DiscountDetails_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

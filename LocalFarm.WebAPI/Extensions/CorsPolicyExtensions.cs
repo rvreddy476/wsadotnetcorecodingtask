@@ -6,10 +6,13 @@
         {
             services.AddCors(opt =>
             {
-                opt.AddDefaultPolicy(builder => builder
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
+                opt.AddPolicy(name: "allOrigins",
+                    policy =>
+                    {
+                        policy.AllowAnyOrigin()
+                         .AllowAnyHeader()
+                         .AllowAnyMethod();
+                    });
             });
         }
     }

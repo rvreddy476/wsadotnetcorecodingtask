@@ -11,9 +11,7 @@ namespace LocalFarm.Persistence.Repositories
 
        public async Task<IList<Product>> GetAllProducts(CancellationToken cancellationToken)=>
             await Context.Products.ToListAsync(cancellationToken);
-        public async Task<IList<DiscountDetail>> GetAllProductDiscounts(CancellationToken cancellationToken)=>
-            await Context.DiscountDetails.Include(x=>x.DiscountType).ToListAsync(cancellationToken);
-        
-
+        public async Task<Product> GetProductById(int id, CancellationToken cancellationToken) =>
+            await Context.Products.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 }

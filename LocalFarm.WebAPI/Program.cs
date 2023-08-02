@@ -12,8 +12,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigurePersistence(builder.Configuration);
 builder.Services.ConfigureApplication();
-
-builder.Services.ConfigureCorsPolicy();
+#region cors
+var corspolicy = "allOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: corspolicy,
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                      });
+});
+#endregion
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -29,6 +40,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(corspolicy);
 
 app.UseAuthorization();
 

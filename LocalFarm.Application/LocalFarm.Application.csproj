@@ -18,4 +18,8 @@
     <ProjectReference Include="..\LocalFarm.Domain\LocalFarm.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\ProductFeatures\" />
+  </ItemGroup>
+
 </Project>

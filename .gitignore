@@ -9,3 +9,6 @@
 /LocalFarm.Persistence/obj
 /LocalFarm.WebAPI/bin/Debug/net6.0
 /LocalFarm.WebAPI/obj
+/.vs
+/LocalFarm.Application.UnitTests/bin
+/LocalFarm.Application.UnitTests/obj
